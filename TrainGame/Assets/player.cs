@@ -49,4 +49,14 @@ public class player : MonoBehaviour {
 			GetComponent<Animator> ().Play ("idle");
 		}
 	}
+	void OnCollisionEnter(Collision collision) {
+		foreach (GameObject contact in collision.contacts) {
+			switch(contact.name){
+			case "coal":
+				Debug.Log("coal");
+				break;
+			}
+		}
+		
+	}
 }
