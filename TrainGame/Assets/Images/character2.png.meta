@@ -1,15 +1,16 @@
 fileFormatVersion: 2
-guid: 3c190361e09804374ae218252a2cb9cb
-timeCreated: 1446870624
+guid: cbf8738b28550466fa7ce497625f7b3e
+timeCreated: 1446921544
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: character1faces_0
-    21300002: character1faces_1
-    21300004: character1faces_2
-    21300006: character1faces_3
-    21300008: character1faces_4
-    21300010: character1faces_5
+    21300000: character2_0
+    21300002: character2_1
+    21300004: character2_2
+    21300006: character2_3
+    21300008: character2_4
+    21300010: character2_5
+    21300012: character2_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -56,63 +57,73 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: character1faces_0
+    - name: character2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 467
-        width: 150
-        height: 45
+        x: 1
+        y: 1522
+        width: 199
+        height: 526
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: character1faces_1
+    - name: character2_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 422
-        width: 150
-        height: 45
+        x: 201
+        y: 1525
+        width: 199
+        height: 523
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: character1faces_2
+    - name: character2_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 377
-        width: 150
-        height: 45
+        x: 401
+        y: 1522
+        width: 199
+        height: 526
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: character1faces_3
+    - name: character2_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 332
-        width: 150
-        height: 45
+        x: 601
+        y: 1523
+        width: 199
+        height: 525
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: character1faces_4
+    - name: character2_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 287
-        width: 150
-        height: 45
+        x: 801
+        y: 1520
+        width: 200
+        height: 528
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: character1faces_5
+    - name: character2_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 242
-        width: 150
-        height: 45
+        x: 1
+        y: 1017
+        width: 199
+        height: 503
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: character2_6
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 1041
+        width: 208
+        height: 479
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
