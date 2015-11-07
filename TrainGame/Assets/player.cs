@@ -7,6 +7,7 @@ public class player : MonoBehaviour {
 	public float speed;
 	private float jumpspeed;
 	private float ground;
+	private string control;
 	
 	public string up;
 	public string down;
@@ -38,6 +39,9 @@ public class player : MonoBehaviour {
 			transform.Translate (-transform.right * speed * Time.deltaTime); 
 			transform.rotation = new Quaternion (0, 0, 0, 0);
 		}
+		if (Input.GetKeyDown (action)) {
+			doAction(); 
+		}
 		if (Input.GetKeyDown (action2)) {
 			if(transform.position.y<=ground + GameObject.Find ("train").transform.position.y-oy){
 				GetComponent<Rigidbody>().AddForce(Vector3.up*jumpspeed);
@@ -49,14 +53,25 @@ public class player : MonoBehaviour {
 			GetComponent<Animator> ().Play ("idle");
 		}
 	}
-	void OnCollisionEnter(Collision collision) {
-		foreach (GameObject contact in collision.contacts) {
-			switch(contact.name){
-			case "coal":
-				Debug.Log("coal");
-				break;
-			}
+	private void doAction(){
+		switch(control){
+		case "coal":
+			GetComponent<Rigidbody>().AddForce(Vector3.right*1000f);
+			GetComponent<Rigidbody>().AddForce(Vector3.up*1000f);
+			break;
 		}
-		
+	}
+
+	private void OnCollisionEnter(Collision collision) {
+		switch(collision.gameObject.name){
+		case "coal":
+			control="coal";
+			break;
+		}
+	}
+	private void OnCollisionExit(Collision collision) {
+		if(control==collision.gameObject.name){
+			control="";
+		}
 	}
 }
