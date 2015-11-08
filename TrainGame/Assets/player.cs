@@ -41,6 +41,9 @@ public class player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+
+
 		if (Input.GetKey (up)){ 
 			transform.Translate(transform.forward * speed * Time.deltaTime);
 		}
@@ -87,6 +90,10 @@ public class player : MonoBehaviour {
 			Destroy (coals);
 			}
 			break;
+
+		case "button":
+			train.GetComponent<trainShaking>().buttonCount++;
+			break;
 		}
 	}
 
@@ -97,6 +104,10 @@ public class player : MonoBehaviour {
 			break;
 		case "stove":
 			control="stove";
+			break;
+
+		case "button":
+			control="button";
 			break;
 		}
 	}
