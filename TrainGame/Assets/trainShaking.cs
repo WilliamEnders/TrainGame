@@ -12,6 +12,7 @@ public class trainShaking : MonoBehaviour {
 	public int buttonCount;
 
 	private GameObject buttonPanel;
+	private GameObject mph;
 
 	void Start () {
 		op = GameObject.Find ("train").transform.position;
@@ -22,6 +23,7 @@ public class trainShaking : MonoBehaviour {
 		bump = 1f;
 		buttonCount = 0;
 		buttonPanel = GameObject.Find ("ButtonText");
+		mph = GameObject.Find ("MPH");
 
 	}
 
@@ -38,6 +40,7 @@ public class trainShaking : MonoBehaviour {
 		buttonCount = 0;
 	}
 	void Update () {
+		mph.GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
 		buttonPanel.GetComponent<Text> ().text = buttonCount.ToString();
 		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		if (bump > 1f) {
