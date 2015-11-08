@@ -20,13 +20,18 @@ public class trainShaking : MonoBehaviour {
 		op2.x -= 10f;
 		speed = 0.1f;
 		bump = 1f;
-		buttonCount = 0;
+		resetButton ();
 		buttonPanel = GameObject.Find ("ButtonText");
 
 	}
 
 	// Update is called once per frame
 	public void trainBump(){
+		resetButton ();
+		if (GameObject.Find ("ButtonText").GetComponent<Text> ().text == "0") {
+			bump = 5;
+			return;
+		}
 		bump = 20;
 		Vector3 _pos = Vector3.down*2f + (GameObject.Find ("p1").transform.position + GameObject.Find ("p2").transform.position + GameObject.Find ("p3").transform.position +GameObject.Find ("p4").transform.position)/4f;
 		GameObject.Find ("p1").GetComponent<Rigidbody> ().AddExplosionForce (0f, _pos, 10f);
@@ -35,10 +40,18 @@ public class trainShaking : MonoBehaviour {
 		GameObject.Find ("p4").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
 		GameObject.Find ("a_explosion").GetComponent<AudioSource> ().Play ();
 		speedDown ();
-		buttonCount = 0;
+
 	}
+	private void resetButton(){
+		buttonCount = (int)Random.Range (0, 30) + 10;
+	}
+
 	void Update () {
-		buttonPanel.GetComponent<Text> ().text = buttonCount.ToString();
+		if (buttonCount > 0) {
+			buttonPanel.GetComponent<Text> ().text = buttonCount.ToString ();
+		} else {
+			buttonPanel.GetComponent<Text> ().text = "XXX";
+		}
 		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		if (bump > 1f) {
 			bump -= 0.4f;
@@ -71,6 +84,7 @@ public class trainShaking : MonoBehaviour {
 
 	}
 	public void speedDown(){
+
 		speed -= 0.05f;
 		if(speed < 0f){
 			speed = 0f;
