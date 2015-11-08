@@ -15,12 +15,21 @@ public class player : MonoBehaviour {
 	public string right;
 	public string action;
 	public string action2;
+
+	public float slowdown;
+
+	public GameObject coal;
+	private bool coalCarry;
+
+	private float xScale;
 	
 	// Use this for initialization
 	void Start () {
 		jumpspeed = 600f;
 		ground = -1.20f;
 		oy = GameObject.Find ("train").transform.position.y;
+		coalCarry = false;
+		xScale = transform.localScale.x;
 		
 	}
 	
@@ -34,16 +43,16 @@ public class player : MonoBehaviour {
 		}
 		if (Input.GetKey (right)) {
 			transform.Translate (transform.right * speed * Time.deltaTime); 
-			transform.rotation = new Quaternion (0, 180, 0, 0);
+			transform.localScale = new Vector3(-xScale,transform.localScale.y,transform.localScale.z);
 		} else if (Input.GetKey (left)) {
 			transform.Translate (-transform.right * speed * Time.deltaTime); 
-			transform.rotation = new Quaternion (0, 0, 0, 0);
+			transform.localScale = new Vector3(xScale,transform.localScale.y,transform.localScale.z);
 		}
 		if (Input.GetKeyDown (action)) {
 			doAction(); 
 		}
 		if (Input.GetKeyDown (action2)) {
-			if(transform.position.y<=ground + GameObject.Find ("train").transform.position.y-oy){
+			if(transform.position.y<=ground + GameObject.Find ("train").transform.position.y-oy && !coalCarry){
 				GetComponent<Rigidbody>().AddForce(Vector3.up*jumpspeed);
 			}
 		}
@@ -56,8 +65,10 @@ public class player : MonoBehaviour {
 	private void doAction(){
 		switch(control){
 		case "coal":
-			GetComponent<Rigidbody>().AddForce(Vector3.right*1000f);
-			GetComponent<Rigidbody>().AddForce(Vector3.up*1000f);
+			GameObject coals = Instantiate(coal,new Vector3(transform.position.x,transform.position.y - 0.2f,transform.position.z - 0.1f),transform.rotation) as GameObject;
+			coals.transform.parent = transform;
+			speed -= slowdown;
+			coalCarry = true;
 			break;
 		}
 	}
