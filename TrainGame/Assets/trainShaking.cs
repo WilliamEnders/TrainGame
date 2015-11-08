@@ -25,6 +25,7 @@ public class trainShaking : MonoBehaviour {
 		GameObject.Find ("p3").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
 		GameObject.Find ("p4").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
 		GameObject.Find ("coal").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
+		GameObject.Find ("a_explosion").GetComponent<AudioSource> ().Play ();
 	}
 	void Update () {
 		if (bump > 1f) {
