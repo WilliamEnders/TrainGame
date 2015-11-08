@@ -24,10 +24,11 @@ public class trainShaking : MonoBehaviour {
 		GameObject.Find ("p2").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
 		GameObject.Find ("p3").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
 		GameObject.Find ("p4").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
-		GameObject.Find ("coal").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
 		GameObject.Find ("a_explosion").GetComponent<AudioSource> ().Play ();
+		speedDown ();
 	}
 	void Update () {
+		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		if (bump > 1f) {
 			bump -= 0.4f;
 		} else {
@@ -42,12 +43,26 @@ public class trainShaking : MonoBehaviour {
 			GameObject.Find ("maintrack").transform.Translate(Vector3.left*speed);
 			GameObject.Find ("trees").transform.Translate(Vector3.left*speed);
 
-			if(GameObject.Find ("maintrack").transform.position.x<=-22.4f){
-				GameObject.Find ("maintrack").transform.Translate(Vector3.right*22.4f);
+			if(GameObject.Find ("maintrack").transform.position.x<=-18.49f){
+				GameObject.Find ("maintrack").transform.Translate(Vector3.right*(33.49f));
 
 			}
 		}
 		GameObject.Find ("train").transform.position = op + Random.Range(0f,0.05f) * Vector3.up*bump;
 		GameObject.Find ("train2").transform.position = op2 + Random.Range(0f,0.05f) * Vector3.up*bump;
+	}
+
+	public void speedUp(){
+		if(speed < 10f){
+		speed += 0.4f;
+		}
+
+	}
+	public void speedDown(){
+		speed += 0.2f;
+		if(speed < 0f){
+			speed = 0f;
+		}
+		
 	}
 }

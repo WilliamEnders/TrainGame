@@ -19,15 +19,21 @@ public class player : MonoBehaviour {
 	public float slowdown;
 
 	public GameObject coal;
+	private GameObject coals;
 	private bool coalCarry;
 
 	private float xScale;
+
+	private GameObject train;
+
+
 	
 	// Use this for initialization
 	void Start () {
 		jumpspeed = 600f;
 		ground = -1.20f;
 		oy = GameObject.Find ("train").transform.position.y;
+		train = GameObject.Find ("hub");
 		coalCarry = false;
 		xScale = transform.localScale.x;
 		
@@ -65,22 +71,36 @@ public class player : MonoBehaviour {
 	private void doAction(){
 		switch(control){
 		case "coal":
-			GameObject coals = Instantiate(coal,new Vector3(transform.position.x,transform.position.y - 0.2f,transform.position.z - 0.1f),transform.rotation) as GameObject;
+			if(!coalCarry){
+			coals = Instantiate(coal,new Vector3(transform.position.x,transform.position.y - 0.2f,transform.position.z - 0.1f),transform.rotation) as GameObject;
 			coals.transform.parent = transform;
 			speed -= slowdown;
 			coalCarry = true;
+			}
+			break;
+
+		case "stove":
+			if(coalCarry){
+			speed += slowdown;
+			train.GetComponent<trainShaking>().speedUp();
+			coalCarry = false;
+			Destroy (coals);
+			}
 			break;
 		}
 	}
 
-	private void OnCollisionEnter(Collision collision) {
+	private void OnTriggerEnter(Collider collision) {
 		switch(collision.gameObject.name){
 		case "coal":
 			control="coal";
 			break;
+		case "stove":
+			control="stove";
+			break;
 		}
 	}
-	private void OnCollisionExit(Collision collision) {
+	private void OnTriggerExit(Collider collision) {
 		if(control==collision.gameObject.name){
 			control="";
 		}
