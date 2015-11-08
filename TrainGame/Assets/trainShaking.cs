@@ -10,7 +10,7 @@ public class trainShaking : MonoBehaviour {
 		op2 = GameObject.Find ("train2").transform.position;
 		op.x -= 10f;
 		op2.x -= 10f;
-		speed = 0.04f;
+		speed = 0.24f;
 	}
 	private Vector3 op;
 	private Vector3 op2;
@@ -23,8 +23,11 @@ public class trainShaking : MonoBehaviour {
 			op2.x += 0.05f;
 		}else{
 			GameObject.Find ("maintrack").transform.Translate(Vector3.left*speed);
-			if(GameObject.Find ("maintrack").transform.position.x<=-12.4f){
-				GameObject.Find ("maintrack").transform.Translate(Vector3.right*12.4f);
+			GameObject.Find ("trees").transform.Translate(Vector3.left*speed);
+
+			if(GameObject.Find ("maintrack").transform.position.x<=-22.4f){
+				GameObject.Find ("maintrack").transform.Translate(Vector3.right*22.4f);
+
 			}
 		}
 		GameObject.Find ("train").transform.position = op + Random.Range(0f,0.05f) * Vector3.up;
