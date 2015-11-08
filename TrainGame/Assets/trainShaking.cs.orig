@@ -49,13 +49,16 @@ public class trainShaking : MonoBehaviour {
 	}
 
 	void Update () {
+<<<<<<< HEAD
 		mph.GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
 		buttonPanel.GetComponent<Text> ().text = buttonCount.ToString();
+=======
 		if (buttonCount > 0) {
 			buttonPanel.GetComponent<Text> ().text = buttonCount.ToString ();
 		} else {
 			buttonPanel.GetComponent<Text> ().text = "XXX";
 		}
+>>>>>>> eb3cd7fc40f81a3f7968655ec30f4e3f881a0819
 		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		if (bump > 1f) {
 			bump -= 0.4f;

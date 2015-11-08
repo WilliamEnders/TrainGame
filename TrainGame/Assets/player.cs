@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class player : MonoBehaviour {
 	
@@ -92,7 +93,18 @@ public class player : MonoBehaviour {
 			break;
 
 		case "button":
-			train.GetComponent<trainShaking>().buttonCount++;
+			int _d;
+			if(name=="p3"){
+				_d = 10;
+			}else if(name =="p2"){
+				_d = 5;
+			}else if(name == "p1"){
+				_d=2;
+			}else{
+				_d=1;
+			}
+			train.GetComponent<trainShaking>().buttonCount-=_d;
+
 			break;
 		}
 	}
