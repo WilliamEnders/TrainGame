@@ -1,33 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class trainShaking : MonoBehaviour {
 
 	// Use this for initialization
 	public float speed;
+	private Vector3 op;
+	private Vector3 op2;
+	private float bump;
+	public int buttonCount;
+
+	private GameObject buttonPanel;
+
 	void Start () {
 		op = GameObject.Find ("train").transform.position;
 		op2 = GameObject.Find ("train2").transform.position;
 		op.x -= 10f;
 		op2.x -= 10f;
-		speed = 0.24f;
+		speed = 0.1f;
 		bump = 1f;
+		buttonCount = 0;
+		buttonPanel = GameObject.Find ("ButtonText");
+
 	}
-	private Vector3 op;
-	private Vector3 op2;
-	private float bump;
+
 	// Update is called once per frame
 	public void trainBump(){
 		bump = 20;
 		Vector3 _pos = Vector3.down*2f + (GameObject.Find ("p1").transform.position + GameObject.Find ("p2").transform.position + GameObject.Find ("p3").transform.position +GameObject.Find ("p4").transform.position)/4f;
-		GameObject.Find ("p1").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
-		GameObject.Find ("p2").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
-		GameObject.Find ("p3").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
+		GameObject.Find ("p1").GetComponent<Rigidbody> ().AddExplosionForce (0f, _pos, 10f);
+		GameObject.Find ("p2").GetComponent<Rigidbody> ().AddExplosionForce (750f, _pos, 10f);
+		GameObject.Find ("p3").GetComponent<Rigidbody> ().AddExplosionForce (750f, _pos, 10f);
 		GameObject.Find ("p4").GetComponent<Rigidbody> ().AddExplosionForce (1000f, _pos, 10f);
 		GameObject.Find ("a_explosion").GetComponent<AudioSource> ().Play ();
 		speedDown ();
+		buttonCount = 0;
 	}
 	void Update () {
+		buttonPanel.GetComponent<Text> ().text = buttonCount.ToString();
 		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		if (bump > 1f) {
 			bump -= 0.4f;
@@ -54,12 +65,13 @@ public class trainShaking : MonoBehaviour {
 
 	public void speedUp(){
 		if(speed < 10f){
-		speed += 0.4f;
+		speed += 0.1f;
+			GameObject.Find ("Face").GetComponent<Animator>().Play ("facehappy");
 		}
 
 	}
 	public void speedDown(){
-		speed += 0.2f;
+		speed -= 0.05f;
 		if(speed < 0f){
 			speed = 0f;
 		}

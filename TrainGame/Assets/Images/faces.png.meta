@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7fd00ab52693740898c019746d605f63
-timeCreated: 1446927677
+timeCreated: 1447007225
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,6 +10,7 @@ TextureImporter:
     21300006: faces_3
     21300008: faces_4
     21300010: faces_5
+    21300012: faces_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -59,60 +60,70 @@ TextureImporter:
     - name: faces_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 467
-        width: 150
-        height: 45
+        x: 3
+        y: 452
+        width: 145
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: faces_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 422
-        width: 150
-        height: 45
+        x: 3
+        y: 388
+        width: 145
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: faces_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 377
-        width: 150
-        height: 45
+        x: 3
+        y: 324
+        width: 145
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: faces_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 332
-        width: 150
-        height: 45
+        x: 3
+        y: 260
+        width: 145
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: faces_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 287
-        width: 150
-        height: 45
+        x: 3
+        y: 196
+        width: 145
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: faces_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 242
-        width: 150
-        height: 45
+        x: 3
+        y: 132
+        width: 145
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: faces_6
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 68
+        width: 145
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
