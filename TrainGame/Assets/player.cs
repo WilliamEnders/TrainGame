@@ -73,8 +73,10 @@ public class player : MonoBehaviour {
 		}
 	}
 	private void doAction(){
+		Debug.Log (control);
 		switch(control){
 		case "coal":
+
 			if(!coalCarry){
 			coals = Instantiate(coal,new Vector3(transform.position.x,transform.position.y - 0.2f,transform.position.z - 0.1f),transform.rotation) as GameObject;
 			coals.transform.parent = transform;
@@ -93,6 +95,7 @@ public class player : MonoBehaviour {
 			break;
 
 		case "button":
+			GameObject.Find ("a_button").GetComponent<AudioSource> ().Play ();
 			int _d;
 			if(name=="p3"){
 				_d = 10;
@@ -106,20 +109,30 @@ public class player : MonoBehaviour {
 			train.GetComponent<trainShaking>().buttonCount-=_d;
 
 			break;
+		case "wheel":
+			train.GetComponent<trainShaking>().broke -=10;
+			if(train.GetComponent<trainShaking>().broke<0f)train.GetComponent<trainShaking>().broke=0f;
+			GameObject.Find ("a_wheel").GetComponent<AudioSource> ().Play ();
+			GameObject.Find("wheel").transform.Rotate(new Vector3(0,0,10));
+			Debug.Log("a");
+			break;
 		}
 	}
 
 	private void OnTriggerEnter(Collider collision) {
-		switch(collision.gameObject.name){
+		switch (collision.gameObject.name) {
 		case "coal":
-			control="coal";
+			control = "coal";
 			break;
 		case "stove":
-			control="stove";
+			control = "stove";
 			break;
 
 		case "button":
-			control="button";
+			control = "button";
+			break;
+		case "wheel":
+			control = "wheel";
 			break;
 		}
 	}
