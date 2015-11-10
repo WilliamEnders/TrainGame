@@ -26,7 +26,7 @@ public class player : MonoBehaviour {
 	private float xScale;
 
 	private GameObject train;
-
+	private Transform respawn;
 
 	
 	// Use this for initialization
@@ -37,13 +37,18 @@ public class player : MonoBehaviour {
 		train = GameObject.Find ("hub");
 		coalCarry = false;
 		xScale = transform.localScale.x;
+		respawn = GameObject.Find ("respawn").transform;
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		if(transform.position.y < -5){
 
+			transform.position = respawn.position;
+
+		}
 
 		if (Input.GetKey (up)){ 
 			transform.Translate(transform.forward * speed * Time.deltaTime);
@@ -116,6 +121,7 @@ public class player : MonoBehaviour {
 			GameObject.Find("wheel").transform.Rotate(new Vector3(0,0,10));
 			Debug.Log("a");
 			break;
+
 		}
 	}
 
