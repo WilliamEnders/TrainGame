@@ -12,7 +12,7 @@ public class obstacle : MonoBehaviour {
 	void Update () {
 		if (transform.position.x < 3) {
 			GameObject.Find ("hub").GetComponent<trainShaking> ().trainBump ();
-			transform.Translate(Vector3.right*150);
+			transform.Translate(Vector3.right*100);
 		}
 	}
 }

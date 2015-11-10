@@ -32,7 +32,7 @@ public class trainShaking : MonoBehaviour {
 	public void trainBump(){
 		resetButton ();
 		broke = 100f;
-		if (GameObject.Find ("ButtonText").GetComponent<Text> ().text == "0") {
+		if (GameObject.Find ("ButtonText").GetComponent<Text> ().text == "Yay!") {
 			bump = 5;
 			return;
 		}
@@ -52,14 +52,13 @@ public class trainShaking : MonoBehaviour {
 	}
 
 	void Update () {
-<<<<<<< HEAD
+
 		GameObject.Find ("mph").GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
 		speedDown (broke / 10000f);
 		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke;
-=======
-		mph.GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
+
 		buttonPanel.GetComponent<Text> ().text = buttonCount.ToString();
->>>>>>> origin/master
+
 		if (buttonCount > 0) {
 			buttonPanel.GetComponent<Text> ().text = buttonCount.ToString ();
 		} else 	if (buttonCount == 0) {
