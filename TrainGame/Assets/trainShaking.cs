@@ -11,7 +11,6 @@ public class trainShaking : MonoBehaviour {
 	private float bump;
 	public int buttonCount;
 	public float broke;
-	private GameObject buttonPanel;
 	private GameObject mph;
 
 	void Start () {
@@ -22,7 +21,6 @@ public class trainShaking : MonoBehaviour {
 		speed = 0.1f;
 		bump = 1f;
 		broke = 0f;
-		buttonPanel = GameObject.Find ("ButtonText");
 		mph = GameObject.Find ("MPH");
 
 	}
