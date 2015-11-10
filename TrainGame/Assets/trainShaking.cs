@@ -11,16 +11,18 @@ public class trainShaking : MonoBehaviour {
 	private float bump;
 	public int buttonCount;
 	public float broke;
+	private GameObject buttonPanel;
 	private GameObject mph;
 
 	void Start () {
 		op = GameObject.Find ("train").transform.position;
-		op2 = GameObject.Find ("train2").transform.position;
+		//op2 = GameObject.Find ("train2").transform.position;
 		op.x -= 10f;
 		op2.x -= 10f;
 		speed = 0.1f;
 		bump = 1f;
 		broke = 0f;
+		buttonPanel = GameObject.Find ("ButtonText");
 		mph = GameObject.Find ("MPH");
 
 	}
@@ -43,6 +45,7 @@ public class trainShaking : MonoBehaviour {
 		GameObject.Find ("mph").GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
 		speedDown (broke / 10000f);
 		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke;
+
 		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		if (bump > 1f) {
 			bump -= 0.4f;
@@ -64,7 +67,7 @@ public class trainShaking : MonoBehaviour {
 			}
 		}
 		GameObject.Find ("train").transform.position = op + Random.Range(0f,0.05f) * Vector3.up*bump;
-		GameObject.Find ("train2").transform.position = op2 + Random.Range(0f,0.05f) * Vector3.up*bump;
+		//GameObject.Find ("train2").transform.position = op2 + Random.Range(0f,0.05f) * Vector3.up*bump;
 	}
 
 	public void speedUp(){
@@ -75,7 +78,7 @@ public class trainShaking : MonoBehaviour {
 	}
 	public void speedDown(float _n = -1f){
 		if (_n == -1f) {
-			speed -= 0.05f;
+			//speed -= 0.05f;
 		} else {
 		//	speed -= _n;
 		}
