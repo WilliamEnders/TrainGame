@@ -93,26 +93,12 @@ public class player : MonoBehaviour {
 		case "stove":
 			if(coalCarry){
 			speed += slowdown;
-			train.GetComponent<trainShaking>().speedUp();
 			coalCarry = false;
 			Destroy (coals);
+				if(train.GetComponent<trainShaking>().fuel == 0){
+			train.GetComponent<trainShaking>().fuel = 5;
 			}
-			break;
-
-		case "button":
-			GameObject.Find ("a_button").GetComponent<AudioSource> ().Play ();
-			int _d;
-			if(name=="p3"){
-				_d = 10;
-			}else if(name =="p2"){
-				_d = 5;
-			}else if(name == "p1"){
-				_d=2;
-			}else{
-				_d=1;
 			}
-			train.GetComponent<trainShaking>().buttonCount-=_d;
-
 			break;
 		case "wheel":
 			train.GetComponent<trainShaking>().broke -=10;
@@ -133,9 +119,15 @@ public class player : MonoBehaviour {
 		case "stove":
 			control = "stove";
 			break;
+		case "bellow":
+			if(GetComponent<Rigidbody>().velocity.y < 0){
 
-		case "button":
-			control = "button";
+				if(train.GetComponent<trainShaking>().fuel >= 1){
+					train.GetComponent<trainShaking>().speedUp(0.005f);
+					train.GetComponent<trainShaking>().fuel -= 1;
+				}
+			}
+
 			break;
 		case "wheel":
 			control = "wheel";
