@@ -77,6 +77,9 @@ public class trainShaking : MonoBehaviour {
 	public void speedDown(float _n = -1f){
 		if (_n == -1f) {
 			//speed -= 0.05f;
+			op+=Vector3.up*1f;
+			Camera.main.transform.Translate(Vector3.up*1f);
+			Camera.main.transform.Translate(Vector3.back*1f);
 		} else {
 		//	speed -= _n;
 		}
