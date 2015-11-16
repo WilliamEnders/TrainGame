@@ -121,10 +121,11 @@ public class player : MonoBehaviour {
 			break;
 		case "bellow":
 			if(GetComponent<Rigidbody>().velocity.y < 0){
-
+				GameObject.Find("bellow").GetComponent<Animator>().Play("Bellow");
 				if(train.GetComponent<trainShaking>().fuel >= 1){
 					train.GetComponent<trainShaking>().speedUp(0.005f);
 					train.GetComponent<trainShaking>().fuel -= 1;
+
 				}
 			}
 
