@@ -83,7 +83,7 @@ public class player : MonoBehaviour {
 		case "coal":
 
 			if(!coalCarry){
-			coals = Instantiate(coal,new Vector3(transform.position.x,transform.position.y - 0.2f,transform.position.z - 0.1f),transform.rotation) as GameObject;
+			coals = Instantiate(coal,new Vector3(transform.position.x,transform.position.y - 0.2f,transform.position.z - 0.2f),transform.rotation) as GameObject;
 			coals.transform.parent = transform;
 			speed -= slowdown;
 			coalCarry = true;

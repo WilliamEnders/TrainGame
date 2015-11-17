@@ -32,7 +32,7 @@ public class trainShaking : MonoBehaviour {
 
 	// Update is called once per frame
 	public void trainBump(){
-		broke = 100f;
+		broke = 1f;
 		bump = 20;
 
 		if(GameObject.Find ("p1")) GameObject.Find ("p1").GetComponent<Rigidbody> ().AddExplosionForce (1000f,  GameObject.Find ("p1").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
@@ -48,7 +48,7 @@ public class trainShaking : MonoBehaviour {
 		steam.GetComponent<ParticleSystem> ().emissionRate = fuel * 2+10;
 		GameObject.Find ("mph").GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
 		speedDown (broke / 10000f);
-		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke;
+		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke*100;
 
 		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		if (bump > 1f) {
