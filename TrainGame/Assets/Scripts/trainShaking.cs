@@ -51,6 +51,9 @@ public class trainShaking : MonoBehaviour {
 		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke*100;
 
 		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
+		GameObject.Find ("steam").GetComponent<ParticleSystem> ().emissionRate = speed > 0f ? 10f  : 0f;
+
+
 		if (bump > 1f) {
 			bump -= 0.4f;
 		} else {

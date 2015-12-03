@@ -13,7 +13,7 @@ public class cameraMove : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		zoom = -5;
+		zoom = -8;
 		average = 0;
 	}
 	
@@ -22,7 +22,7 @@ public class cameraMove : MonoBehaviour {
 
 		findAverage ();
 
-		transform.position = new Vector3(average,0,zoom);
+		transform.position = new Vector3(average,1f,zoom);
 		
 	}
 
@@ -32,11 +32,12 @@ public class cameraMove : MonoBehaviour {
 		for (int i = 0; i < obj.Length; i++) {
 
 			xVals[i] = obj[i].position.x;
-			average = (xVals.Max() + xVals.Min()) / 2;
 
-			if(xVals.Max() - xVals.Min() > 5){
-				zoom = ( -(xVals.Max() - xVals.Min()) ) * (100f / (-(xVals.Max() - xVals.Min()) + 200));
-			}
+		}
+		average = (xVals.Max() + xVals.Min()) / 2;
+		
+		if(xVals.Max() - xVals.Min() > 8f){
+			zoom = -(xVals.Max() - xVals.Min());
 		}
 
 	}
