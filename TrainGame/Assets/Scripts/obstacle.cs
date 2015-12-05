@@ -10,7 +10,7 @@ public class obstacle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (transform.position.x < 3) {
+		if (transform.position.x < 4) {
 			GameObject.Find ("hub").GetComponent<trainShaking> ().trainBump ();
 			transform.Translate(Vector3.right*100);
 		}

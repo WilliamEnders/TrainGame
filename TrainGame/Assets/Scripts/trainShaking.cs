@@ -17,9 +17,11 @@ public class trainShaking : MonoBehaviour {
 	public GameObject fire;
 	public GameObject steam;
 
+	public bool chop;
+
 	void Start () {
+		chop = false;
 		op = GameObject.Find ("train").transform.position;
-		//op2 = GameObject.Find ("train2").transform.position;
 		op.x -= 10f;
 		op2.x -= 10f;
 		speed = 0f;
@@ -32,6 +34,7 @@ public class trainShaking : MonoBehaviour {
 
 	// Update is called once per frame
 	public void trainBump(){
+		if(!chop){
 		broke = 1f;
 		bump = 20;
 		if(GameObject.Find ("p1")) GameObject.Find ("p1").GetComponent<Rigidbody> ().AddExplosionForce (1000f,  GameObject.Find ("p1").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
@@ -40,13 +43,19 @@ public class trainShaking : MonoBehaviour {
 		if(GameObject.Find ("p4")) GameObject.Find ("p4").GetComponent<Rigidbody> ().AddExplosionForce (1000f, GameObject.Find ("p4").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
 		GameObject.Find ("a_explosion").GetComponent<AudioSource> ().Play ();
 		speedDown ();
-
+		}
 	}
 	void Update () {
+
+		if(chop){
+
+		}
+
 		fire.GetComponent<ParticleSystem> ().emissionRate = fuel * 4;
 		steam.GetComponent<ParticleSystem> ().emissionRate = fuel * 2+10;
 		GameObject.Find ("mph").GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
 		speedDown (broke / 10000f);
+
 		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke*100;
 
 		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
@@ -74,7 +83,6 @@ public class trainShaking : MonoBehaviour {
 		}
 		int isStop = (speed > 0) ? 1 : 0;
 		GameObject.Find ("train").transform.position = op + Random.Range(0f,0.05f) * Vector3.up*bump*isStop;
-		//GameObject.Find ("train2").transform.position = op2 + Random.Range(0f,0.05f) * Vector3.up*bump;
 	}
 
 	public void speedUp(float incSpeed){
@@ -86,9 +94,6 @@ public class trainShaking : MonoBehaviour {
 	public void speedDown(float _n = -1f){
 		if (_n == -1f) {
 			speed -= 0.01f;
-			//op+=Vector3.up*1f;
-			//Camera.main.transform.Translate(Vector3.up*1f);
-			//Camera.main.transform.Translate(Vector3.back*1f);
 		} else {
 		speed -= _n;
 		}
@@ -97,4 +102,14 @@ public class trainShaking : MonoBehaviour {
 		}
 		
 	}
+
+	public IEnumerator chopObj(){
+		chop = true;
+		GameObject.Find ("frontchop").GetComponent<MeshRenderer> ().enabled = true;
+		yield return new WaitForSeconds(2);
+		chop = false;
+		GameObject.Find ("frontchop").GetComponent<MeshRenderer> ().enabled = false;
+	}
+
+
 }

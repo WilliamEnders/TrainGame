@@ -49,28 +49,20 @@ public class player : MonoBehaviour {
 
 		}
 			if (Input.GetKey (up)) { 
-				//transform.Translate(transform.forward * speed * Time.deltaTime);
-				//transform.position += Vector3.forward * speed * Time.deltaTime;
 				if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
 					GetComponent<Rigidbody>().AddForce(Vector3.forward * speed);
 				}
 			} else if (Input.GetKey (down)) {
-				//transform.Translate(-transform.forward * speed * Time.deltaTime);
-				//transform.position += -Vector3.forward * speed * Time.deltaTime;
 				if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
 					GetComponent<Rigidbody>().AddForce(Vector3.back * speed);
 				}
 			}
 			if (Input.GetKey (right)) {
-				//transform.Translate (transform.right * speed * Time.deltaTime); 
-				//transform.position += Vector3.right * speed * Time.deltaTime;
 				if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
 					GetComponent<Rigidbody>().AddForce(Vector3.right * speed);
 				}
 				transform.localScale = new Vector3 (-xScale, transform.localScale.y, transform.localScale.z);
 			} else if (Input.GetKey (left)) {
-				//transform.Translate (-transform.right * speed * Time.deltaTime); 
-				//transform.position += -Vector3.right * speed * Time.deltaTime;
 				if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
 					GetComponent<Rigidbody>().AddForce(Vector3.left * speed);
 				}
@@ -118,6 +110,9 @@ public class player : MonoBehaviour {
 			GameObject.Find ("a_wheel").GetComponent<AudioSource> ().Play ();
 			GameObject.Find("wheel").transform.Rotate(new Vector3(0,0,10));
 			break;
+		case "frontbutton":
+			train.GetComponent<trainShaking>().StartCoroutine("chopObj");
+			break;
 		}
 	}
 	private void OnTriggerEnter(Collider collision) {
@@ -134,10 +129,8 @@ public class player : MonoBehaviour {
 				if(train.GetComponent<trainShaking>().fuel >= 1){
 					train.GetComponent<trainShaking>().speedUp(0.005f);
 					train.GetComponent<trainShaking>().fuel -= 1;
-
 				}
 			}
-
 			break;
 		case "wheel":
 			control = "wheel";
@@ -147,7 +140,9 @@ public class player : MonoBehaviour {
 			break;
 		case "teleport2":
 			transform.position = new Vector3(GameObject.Find ("teleport1").transform.position.x + 0.6f,transform.position.y,transform.position.z);
-
+			break;
+		case "frontbutton":
+			control = "frontbutton";
 			break;
 		}
 	}
