@@ -113,12 +113,11 @@ public class player : MonoBehaviour {
 			}
 			break;
 		case "wheel":
-			train.GetComponent<trainShaking>().broke -=0.2f;
+			train.GetComponent<trainShaking>().broke -=0.1f;
 			if(train.GetComponent<trainShaking>().broke<0f)train.GetComponent<trainShaking>().broke=0f;
 			GameObject.Find ("a_wheel").GetComponent<AudioSource> ().Play ();
 			GameObject.Find("wheel").transform.Rotate(new Vector3(0,0,10));
 			break;
-
 		}
 	}
 	private void OnTriggerEnter(Collider collision) {
@@ -142,6 +141,13 @@ public class player : MonoBehaviour {
 			break;
 		case "wheel":
 			control = "wheel";
+			break;
+		case "teleport1":
+			transform.position = new Vector3(GameObject.Find ("teleport2").transform.position.x - 0.6f,transform.position.y,transform.position.z);
+			break;
+		case "teleport2":
+			transform.position = new Vector3(GameObject.Find ("teleport1").transform.position.x + 0.6f,transform.position.y,transform.position.z);
+
 			break;
 		}
 	}

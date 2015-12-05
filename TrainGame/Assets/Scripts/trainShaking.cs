@@ -34,7 +34,6 @@ public class trainShaking : MonoBehaviour {
 	public void trainBump(){
 		broke = 1f;
 		bump = 20;
-
 		if(GameObject.Find ("p1")) GameObject.Find ("p1").GetComponent<Rigidbody> ().AddExplosionForce (1000f,  GameObject.Find ("p1").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
 		if(GameObject.Find ("p2")) GameObject.Find ("p2").GetComponent<Rigidbody> ().AddExplosionForce (1050f, GameObject.Find ("p2").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
 		if(GameObject.Find ("p3")) GameObject.Find ("p3").GetComponent<Rigidbody> ().AddExplosionForce (1050f, GameObject.Find ("p3").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
