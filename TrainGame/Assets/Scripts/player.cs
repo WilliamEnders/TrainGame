@@ -141,6 +141,12 @@ public class player : MonoBehaviour {
 		case "teleport2":
 			transform.position = new Vector3(GameObject.Find ("teleport1").transform.position.x + 0.6f,transform.position.y,transform.position.z);
 			break;
+		case "teleport3":
+			transform.position = new Vector3(GameObject.Find ("teleport4").transform.position.x - 0.6f,transform.position.y,transform.position.z);
+			break;
+		case "teleport4":
+			transform.position = new Vector3(GameObject.Find ("teleport3").transform.position.x + 0.6f,transform.position.y,transform.position.z);
+			break;
 		case "frontbutton":
 			control = "frontbutton";
 			break;
