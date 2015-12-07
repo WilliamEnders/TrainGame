@@ -140,7 +140,9 @@ public class player : MonoBehaviour {
 			GameObject.Find("wheel").transform.Rotate(new Vector3(0,0,10));
 			break;
 		case "frontbutton":
+			if(train.GetComponent<trainShaking>().chop == false){
 			train.GetComponent<trainShaking>().StartCoroutine("chopObj");
+			}
 			break;
 		}
 	}
@@ -148,9 +150,9 @@ public class player : MonoBehaviour {
 		switch (collision.gameObject.name) {
 		case "dripping":
 			if (bucketCarry) {
-				if(bucketValue<=250){
+				if(bucketValue<=100){
 					bucketValue++;
-					buckets.transform.localScale = buckets.transform.localScale * 1.005f;
+					buckets.transform.localScale = buckets.transform.localScale * 1.01f;
 					originalSpeed=speed;
 					speed *= 0.9998f;
 				}

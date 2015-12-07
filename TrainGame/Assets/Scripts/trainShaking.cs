@@ -17,26 +17,34 @@ public class trainShaking : MonoBehaviour {
 	public GameObject fire;
 	public GameObject steam;
 	private GameObject overheatFire;
+	private GameObject maintrack;
 
 	public int overheat;
-
-
 	public bool chop;
+
+	public GameObject p1,p2,p3,p4;
 
 	void Start () {
 		overheat = 0;
-		chop = false;
-		op = GameObject.Find ("train").transform.position;
+		chop = true;
 		op.x -= 10f;
 		op2.x -= 10f;
 		speed = 0f;
 		bump = 1f;
 		broke = 0f;
-		mph = GameObject.Find ("MPH");
 		fuel = 0;
-		steam=GameObject.Find ("steam");
-		overheatFire=GameObject.Find ("overheatFire");
 		StartCoroutine("drippingObj");
+
+		maintrack = GameObject.Find ("maintrack");
+		overheatFire=GameObject.Find ("overheatFire");
+		steam = GameObject.Find ("steam");
+		op = GameObject.Find ("train").transform.position;
+		mph = GameObject.Find ("mph");
+
+		p1 = GameObject.Find ("p1");
+		p2 = GameObject.Find ("p2");
+		p3 = GameObject.Find ("p3");
+		p4 = GameObject.Find ("p4");
 	}
 
 	// Update is called once per frame
@@ -44,14 +52,21 @@ public class trainShaking : MonoBehaviour {
 		if(!chop){
 		broke = 1f;
 		bump = 20;
-		if(GameObject.Find ("p1")) GameObject.Find ("p1").GetComponent<Rigidbody> ().AddExplosionForce (1000f,  GameObject.Find ("p1").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
-		if(GameObject.Find ("p2")) GameObject.Find ("p2").GetComponent<Rigidbody> ().AddExplosionForce (1050f, GameObject.Find ("p2").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
-		if(GameObject.Find ("p3")) GameObject.Find ("p3").GetComponent<Rigidbody> ().AddExplosionForce (1050f, GameObject.Find ("p3").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
-		if(GameObject.Find ("p4")) GameObject.Find ("p4").GetComponent<Rigidbody> ().AddExplosionForce (1000f, GameObject.Find ("p4").transform.position+new Vector3(Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f),Random.Range(-0.5f,0.5f)), 10f);
+		bumpPlayer(p1);
+		bumpPlayer(p2);
+		bumpPlayer(p3);
+		bumpPlayer(p4);
 		GameObject.Find ("a_explosion").GetComponent<AudioSource> ().Play ();
 		speedDown ();
 		}
 	}
+
+	void bumpPlayer(GameObject _p){
+		if (_p) {
+			_p.GetComponent<Rigidbody> ().AddExplosionForce (1000f, _p.transform.position + new Vector3 (Random.Range (-0.5f, 0.5f), Random.Range (-0.5f, 0.5f), Random.Range (-0.5f, 0.5f)), 10f);
+		}
+	}
+
 	void Update () {
 
 
@@ -60,21 +75,23 @@ public class trainShaking : MonoBehaviour {
 		}
 		if (overheat <= 0) {
 			if (Random.Range (0,1000)  == 1) {
-				overheat = 500;
+				overheat = 100;
 			}
 		}
 
 		overheatFire.GetComponent<ParticleSystem> ().emissionRate = overheat ;
 
 		fire.GetComponent<ParticleSystem> ().emissionRate = fuel * 4;
+
+
 		steam.GetComponent<ParticleSystem> ().emissionRate = fuel * 2+10;
-		GameObject.Find ("mph").GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
+		mph.GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
 		speedDown (broke / 10000f);
 
 		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke*100;
 
-		GameObject.Find ("steam").GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
-		GameObject.Find ("steam").GetComponent<ParticleSystem> ().emissionRate = speed > 0f ? 10f  : 0f;
+		steam.GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
+		steam.GetComponent<ParticleSystem> ().emissionRate = speed > 0f ? 10f  : 0f;
 
 
 		if (bump > 1f) {
@@ -88,11 +105,11 @@ public class trainShaking : MonoBehaviour {
 		if (op2.x < -9.47f) {
 			op2.x += 0.05f;
 		}else{
-			GameObject.Find ("maintrack").transform.Translate(Vector3.left*speed);
+			maintrack.transform.Translate(Vector3.left*speed);
 			GameObject.Find ("trees").transform.Translate(Vector3.left*speed);
 
-			if(GameObject.Find ("maintrack").transform.position.x<=-18.49f){
-				GameObject.Find ("maintrack").transform.Translate(Vector3.right*(33.49f));
+			if(maintrack.transform.position.x<=-18.49f){
+				maintrack.transform.Translate(Vector3.right*(33.49f));
 
 			}
 		}
@@ -126,6 +143,7 @@ public class trainShaking : MonoBehaviour {
 		GameObject.Find ("dripping").transform.position = _v;
 		StartCoroutine("drippingObj");
 	}
+
 	public IEnumerator chopObj(){
 		chop = true;
 		GameObject.Find ("frontchop").GetComponent<MeshRenderer> ().enabled = true;
@@ -133,6 +151,5 @@ public class trainShaking : MonoBehaviour {
 		chop = false;
 		GameObject.Find ("frontchop").GetComponent<MeshRenderer> ().enabled = false;
 	}
-
-
+	
 }
