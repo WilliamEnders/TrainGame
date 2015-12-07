@@ -6,6 +6,7 @@ public class player : MonoBehaviour {
 	
 	private float oy;
 	public float speed;
+	private float originalSpeed;
 	private float jumpspeed;
 	private float ground;
 	private string control;
@@ -20,21 +21,27 @@ public class player : MonoBehaviour {
 	public float slowdown;
 
 	public GameObject coal;
+	public GameObject bucket;
 	private GameObject coals;
+	private GameObject buckets;
 	private bool coalCarry;
+	private bool bucketCarry;
 
 	private float xScale;
-
+	private int bucketValue;
 	private GameObject train;
 	private Transform respawn;
 	private float maxSpeed = 5f;
+	private bool justteleported;
 	// Use this for initialization
 	void Start () {
+		justteleported = false;
+		bucketValue = 0;
 		jumpspeed = 600f;
 		ground = -1.20f;
 		oy = GameObject.Find ("train").transform.position.y;
 		train = GameObject.Find ("hub");
-		coalCarry = false;
+		coalCarry = bucketCarry = false;
 		xScale = transform.localScale.x;
 		respawn = GameObject.Find ("respawn").transform;
 		
@@ -82,27 +89,50 @@ public class player : MonoBehaviour {
 		} else {
 			GetComponent<Animator> ().Play ("idle");
 		}
-}
+	}
 	private void doAction(){
 		Debug.Log (control);
-		switch(control){
+		switch (control) {
 		case "coal":
-
-			if(!coalCarry){
-			coals = Instantiate(coal,new Vector3(transform.position.x,transform.position.y - 0.2f,transform.position.z - 0.2f),transform.rotation) as GameObject;
-			coals.transform.parent = transform;
-			speed -= slowdown;
-			coalCarry = true;
+			if (!coalCarry && !bucketCarry && train.GetComponent<trainShaking> ().overheat<=0) {
+				coals = Instantiate (coal, new Vector3 (transform.position.x, transform.position.y - 0.2f, transform.position.z - 0.2f), transform.rotation) as GameObject;
+				coals.transform.parent = transform;
+				speed -= slowdown;
+				coalCarry = true;
 			}
 			break;
-
-		case "stove":
-			if(coalCarry){
-			speed += slowdown;
-			coalCarry = false;
-			Destroy (coals);
-			train.GetComponent<trainShaking>().fuel = 5;
+		case "bucket":
+			if (!bucketCarry && !coalCarry) {
+				buckets = Instantiate (bucket, new Vector3 (transform.position.x, transform.position.y - 0.2f, transform.position.z - 0.2f), transform.rotation) as GameObject;
+				buckets.transform.parent = transform;
+				buckets.transform.localScale *= 0.1f;
+				//speed -= slowdown;
+				bucketCarry = true;
 			}
+			break;
+		
+		case "stove":
+			if (coalCarry) {
+				speed += slowdown;
+				coalCarry = false;
+				Destroy (coals);
+				train.GetComponent<trainShaking> ().fuel = 5;
+			}
+			break;
+		case "overheatFire":
+			if(bucketCarry){
+				print ("po");
+				bucketCarry=false;
+				Destroy (buckets);
+				speed=originalSpeed;
+				train.GetComponent<trainShaking>().overheat -= bucketValue;
+				if(train.GetComponent<trainShaking>().overheat<0){
+					train.GetComponent<trainShaking>().overheat=0;
+				}
+				bucketValue=0;
+				print (train.GetComponent<trainShaking>().overheat );
+			}
+
 			break;
 		case "wheel":
 			train.GetComponent<trainShaking>().broke -=0.1f;
@@ -115,6 +145,21 @@ public class player : MonoBehaviour {
 			break;
 		}
 	}
+	private void OnTriggerStay(Collider collision) {
+		switch (collision.gameObject.name) {
+		case "Water Pipe":
+			if (bucketCarry) {
+				if(bucketValue<=250){
+					bucketValue++;
+					buckets.transform.localScale = buckets.transform.localScale * 1.005f;
+					originalSpeed=speed;
+					speed *= 0.9998f;
+				}
+			}
+			control = "waterpipe";
+			break;
+		}
+	}
 	private void OnTriggerEnter(Collider collision) {
 		switch (collision.gameObject.name) {
 		case "coal":
@@ -122,6 +167,12 @@ public class player : MonoBehaviour {
 			break;
 		case "stove":
 			control = "stove";
+			break;
+		case "overheatFire":
+			control = "overheatFire";
+			break;
+		case "bucket":
+			control = "bucket";
 			break;
 		case "bellow":
 			if(GetComponent<Rigidbody>().velocity.y < 0){
@@ -136,16 +187,28 @@ public class player : MonoBehaviour {
 			control = "wheel";
 			break;
 		case "teleport1":
-			transform.position = new Vector3(GameObject.Find ("teleport2").transform.position.x - 0.6f,transform.position.y,transform.position.z);
-			break;
+			if(!justteleported){
+				justteleported=true;
+				transform.position = new Vector3(GameObject.Find ("teleport2").transform.position.x - 0.6f,transform.position.y,transform.position.z);
+			}
+				break;
 		case "teleport2":
-			transform.position = new Vector3(GameObject.Find ("teleport1").transform.position.x + 0.6f,transform.position.y,transform.position.z);
+			if(!justteleported){
+				justteleported=true;
+				transform.position = new Vector3(GameObject.Find ("teleport1").transform.position.x + 0.6f,transform.position.y,transform.position.z);
+			}
 			break;
 		case "teleport3":
-			transform.position = new Vector3(GameObject.Find ("teleport4").transform.position.x - 0.6f,transform.position.y,transform.position.z);
+			if(!justteleported){
+				justteleported=true;
+				transform.position = new Vector3(GameObject.Find ("teleport4").transform.position.x - 0.6f,transform.position.y,transform.position.z);
+			}
 			break;
 		case "teleport4":
-			transform.position = new Vector3(GameObject.Find ("teleport3").transform.position.x + 0.6f,transform.position.y,transform.position.z);
+			if(!justteleported){
+				justteleported=true;
+				transform.position = new Vector3(GameObject.Find ("teleport3").transform.position.x + 0.6f,transform.position.y,transform.position.z);
+			}
 			break;
 		case "frontbutton":
 			control = "frontbutton";
@@ -153,6 +216,9 @@ public class player : MonoBehaviour {
 		}
 	}
 	private void OnTriggerExit(Collider collision) {
+		if (collision.gameObject.name == "teleport1" || collision.gameObject.name == "teleport2" || collision.gameObject.name == "teleport3" || collision.gameObject.name == "teleport4") {
+			justteleported = false;
+		}
 		if(control==collision.gameObject.name){
 			control="";
 		}

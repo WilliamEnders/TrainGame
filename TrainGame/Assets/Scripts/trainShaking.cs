@@ -16,10 +16,15 @@ public class trainShaking : MonoBehaviour {
 
 	public GameObject fire;
 	public GameObject steam;
+	private GameObject overheatFire;
+
+	public int overheat;
+
 
 	public bool chop;
 
 	void Start () {
+		overheat = 0;
 		chop = false;
 		op = GameObject.Find ("train").transform.position;
 		op.x -= 10f;
@@ -30,6 +35,7 @@ public class trainShaking : MonoBehaviour {
 		mph = GameObject.Find ("MPH");
 		fuel = 0;
 		steam=GameObject.Find ("steam");
+		overheatFire=GameObject.Find ("overheatFire");
 	}
 
 	// Update is called once per frame
@@ -50,6 +56,13 @@ public class trainShaking : MonoBehaviour {
 		if(chop){
 
 		}
+		if (overheat <= 0) {
+			if (Random.Range (0,1000)  == 1) {
+				overheat = 500;
+			}
+		}
+
+		overheatFire.GetComponent<ParticleSystem> ().emissionRate = overheat ;
 
 		fire.GetComponent<ParticleSystem> ().emissionRate = fuel * 4;
 		steam.GetComponent<ParticleSystem> ().emissionRate = fuel * 2+10;
