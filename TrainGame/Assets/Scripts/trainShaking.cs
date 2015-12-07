@@ -36,6 +36,7 @@ public class trainShaking : MonoBehaviour {
 		fuel = 0;
 		steam=GameObject.Find ("steam");
 		overheatFire=GameObject.Find ("overheatFire");
+		StartCoroutine("drippingObj");
 	}
 
 	// Update is called once per frame
@@ -52,6 +53,7 @@ public class trainShaking : MonoBehaviour {
 		}
 	}
 	void Update () {
+
 
 		if(chop){
 
@@ -115,7 +117,15 @@ public class trainShaking : MonoBehaviour {
 		}
 		
 	}
+	public IEnumerator drippingObj(){
 
+		yield return new WaitForSeconds(5);
+		GameObject.Find ("dripping").GetComponent<ParticleSystem> ().Play ();
+		print ("s");
+		Vector3 _v = new Vector3(GameObject.Find ("TrainCar2").transform.position.x+Random.Range (-2, 2),GameObject.Find ("dripping").transform.position.y,GameObject.Find ("dripping").transform.position.z);
+		GameObject.Find ("dripping").transform.position = _v;
+		StartCoroutine("drippingObj");
+	}
 	public IEnumerator chopObj(){
 		chop = true;
 		GameObject.Find ("frontchop").GetComponent<MeshRenderer> ().enabled = true;

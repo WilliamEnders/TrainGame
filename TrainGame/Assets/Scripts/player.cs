@@ -33,6 +33,7 @@ public class player : MonoBehaviour {
 	private Transform respawn;
 	private float maxSpeed = 5f;
 	private bool justteleported;
+	private int drippingCount = 0;
 	// Use this for initialization
 	void Start () {
 		justteleported = false;
@@ -145,7 +146,7 @@ public class player : MonoBehaviour {
 	}
 	private void OnTriggerStay(Collider collision) {
 		switch (collision.gameObject.name) {
-		case "Water Pipe":
+		case "dripping":
 			if (bucketCarry) {
 				if(bucketValue<=250){
 					bucketValue++;
