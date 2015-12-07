@@ -99,6 +99,19 @@ public class player : MonoBehaviour {
 				coals.transform.parent = transform;
 				speed -= slowdown;
 				coalCarry = true;
+			}else{
+				if(bucketCarry){
+					print ("po");
+					bucketCarry=false;
+					Destroy (buckets);
+					speed=originalSpeed;
+					train.GetComponent<trainShaking>().overheat -= bucketValue;
+					if(train.GetComponent<trainShaking>().overheat<0){
+						train.GetComponent<trainShaking>().overheat=0;
+					}
+					bucketValue=0;
+					print (train.GetComponent<trainShaking>().overheat );
+				}
 			}
 			break;
 		case "bucket":
@@ -118,21 +131,6 @@ public class player : MonoBehaviour {
 				Destroy (coals);
 				train.GetComponent<trainShaking> ().fuel = 5;
 			}
-			break;
-		case "overheatFire":
-			if(bucketCarry){
-				print ("po");
-				bucketCarry=false;
-				Destroy (buckets);
-				speed=originalSpeed;
-				train.GetComponent<trainShaking>().overheat -= bucketValue;
-				if(train.GetComponent<trainShaking>().overheat<0){
-					train.GetComponent<trainShaking>().overheat=0;
-				}
-				bucketValue=0;
-				print (train.GetComponent<trainShaking>().overheat );
-			}
-
 			break;
 		case "wheel":
 			train.GetComponent<trainShaking>().broke -=0.1f;
@@ -167,9 +165,6 @@ public class player : MonoBehaviour {
 			break;
 		case "stove":
 			control = "stove";
-			break;
-		case "overheatFire":
-			control = "overheatFire";
 			break;
 		case "bucket":
 			control = "bucket";
