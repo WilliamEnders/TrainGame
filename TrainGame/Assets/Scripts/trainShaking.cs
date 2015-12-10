@@ -24,7 +24,7 @@ public class trainShaking : MonoBehaviour {
 
 	void Start () {
 		overheat = 0;
-		chop = true;
+		chop = false;
 		op.x -= 10f;
 		op2.x -= 10f;
 		speed = 0f;
