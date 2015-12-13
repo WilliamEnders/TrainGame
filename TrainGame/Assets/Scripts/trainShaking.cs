@@ -5,28 +5,26 @@ using UnityEngine.UI;
 public class trainShaking : MonoBehaviour {
 
 	// Use this for initialization
-	public float speed;
 	private Vector3 op;
 	private Vector3 op2;
-	private float bump;
+	public bool chop;
 	public int buttonCount;
-	public float broke;
-	private GameObject mph;
 	public int fuel;
+	public int overheat;
+	public float broke;
+	private float bump;
+	public float speed;
 
 	public GameObject fire;
 	public GameObject steam;
 	private GameObject overheatFire;
 	private GameObject maintrack;
-
-	public int overheat;
-	public bool chop;
-
 	public GameObject p1,p2,p3,p4;
+	private GameObject mph;
 
 	void Start () {
 		overheat = 0;
-		chop = true;
+		chop = false;
 		op.x -= 10f;
 		op2.x -= 10f;
 		speed = 0f;
@@ -36,7 +34,7 @@ public class trainShaking : MonoBehaviour {
 		StartCoroutine("drippingObj");
 
 		maintrack = GameObject.Find ("maintrack");
-		overheatFire=GameObject.Find ("overheatFire");
+		overheatFire = GameObject.Find ("overheatFire");
 		steam = GameObject.Find ("steam");
 		op = GameObject.Find ("train").transform.position;
 		mph = GameObject.Find ("mph");
