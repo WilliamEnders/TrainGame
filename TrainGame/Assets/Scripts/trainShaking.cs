@@ -67,7 +67,6 @@ public class trainShaking : MonoBehaviour {
 
 	void Update () {
 
-
 		if(chop){
 
 		}
