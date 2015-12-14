@@ -24,9 +24,13 @@ public class player : MonoBehaviour {
 	public GameObject bucket;
 	private GameObject coals;
 	private GameObject buckets;
+	private GameObject moon;
+	public GameObject moonstone;
 	private bool coalCarry;
 	private bool bucketCarry;
 
+
+	private bool moonCarry;
 	private float xScale;
 	private int bucketValue;
 	private GameObject train;
@@ -36,6 +40,7 @@ public class player : MonoBehaviour {
 	private int drippingCount = 0;
 	// Use this for initialization
 	void Start () {
+		moonCarry = false;
 		justteleported = false;
 		bucketValue = 0;
 		jumpspeed = 600f;
@@ -132,6 +137,12 @@ public class player : MonoBehaviour {
 				Destroy (coals);
 				train.GetComponent<trainShaking> ().fuel = 5;
 			}
+			if (moonCarry) {
+				speed += slowdown;
+				moonCarry = false;
+				Destroy (moon);
+				train.GetComponent<trainShaking> ().fuel = 10;
+			}
 			break;
 		case "wheel":
 			train.GetComponent<trainShaking>().broke -=0.1f;
@@ -142,6 +153,15 @@ public class player : MonoBehaviour {
 		case "frontbutton":
 			if(train.GetComponent<trainShaking>().chop == false){
 			train.GetComponent<trainShaking>().StartCoroutine("chopObj");
+			}
+			break;
+		case "fusion":
+			if (coalCarry) {
+				moon = Instantiate (moonstone, new Vector3 (transform.position.x, transform.position.y - 0.2f, transform.position.z - 0.2f), transform.rotation) as GameObject;
+				moon.transform.parent = transform;
+				coalCarry = false;
+				moonCarry = true;
+				Destroy (coals);
 			}
 			break;
 		}
@@ -210,6 +230,9 @@ public class player : MonoBehaviour {
 			break;
 		case "frontbutton":
 			control = "frontbutton";
+			break;
+		case "fusion":
+			control = "fusion";
 			break;
 		}
 	}
