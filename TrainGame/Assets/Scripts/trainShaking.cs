@@ -10,12 +10,14 @@ public class trainShaking : MonoBehaviour {
 	public bool chop;
 	public int buttonCount;
 	public int fuel;
+	public int moonfuel;
 	public int overheat;
 	public float broke;
 	private float bump;
 	public float speed;
 
 	public GameObject fire;
+	public GameObject magicfire;
 	public GameObject steam;
 	private GameObject overheatFire;
 	private GameObject maintrack;
@@ -31,7 +33,7 @@ public class trainShaking : MonoBehaviour {
 		bump = 1f;
 		broke = 0f;
 		fuel = 0;
-		StartCoroutine("drippingObj");
+		//StartCoroutine("drippingObj");
 
 		maintrack = GameObject.Find ("maintrack");
 		overheatFire = GameObject.Find ("overheatFire");
@@ -50,10 +52,10 @@ public class trainShaking : MonoBehaviour {
 		if(!chop){
 		broke = 1f;
 		bump = 20;
-		bumpPlayer(p1);
-		bumpPlayer(p2);
-		bumpPlayer(p3);
-		bumpPlayer(p4);
+		//bumpPlayer(p1);
+		//bumpPlayer(p2);
+		//bumpPlayer(p3);
+		//bumpPlayer(p4);
 		GameObject.Find ("a_explosion").GetComponent<AudioSource> ().Play ();
 		speedDown ();
 		}
@@ -79,10 +81,7 @@ public class trainShaking : MonoBehaviour {
 		overheatFire.GetComponent<ParticleSystem> ().emissionRate = overheat ;
 
 		fire.GetComponent<ParticleSystem> ().emissionRate = fuel * 4;
-
-
-		steam.GetComponent<ParticleSystem> ().emissionRate = fuel * 2+10;
-		mph.GetComponent<Text> ().text = (speed*100f).ToString() + "MPH";
+		magicfire.GetComponent<ParticleSystem> ().emissionRate = moonfuel * 6;
 		speedDown (broke / 10000f);
 
 		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke*100;
@@ -131,6 +130,7 @@ public class trainShaking : MonoBehaviour {
 		}
 		
 	}
+	/*
 	public IEnumerator drippingObj(){
 
 		yield return new WaitForSeconds(5);
@@ -140,6 +140,7 @@ public class trainShaking : MonoBehaviour {
 		GameObject.Find ("dripping").transform.position = _v;
 		StartCoroutine("drippingObj");
 	}
+	*/
 
 	public IEnumerator chopObj(){
 		chop = true;

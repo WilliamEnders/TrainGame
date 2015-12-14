@@ -141,7 +141,7 @@ public class player : MonoBehaviour {
 				speed += slowdown;
 				moonCarry = false;
 				Destroy (moon);
-				train.GetComponent<trainShaking> ().fuel = 10;
+				train.GetComponent<trainShaking> ().moonfuel = 10;
 			}
 			break;
 		case "wheel":
@@ -198,6 +198,10 @@ public class player : MonoBehaviour {
 				if(train.GetComponent<trainShaking>().fuel >= 1){
 					train.GetComponent<trainShaking>().speedUp(0.005f);
 					train.GetComponent<trainShaking>().fuel -= 1;
+				}
+				if(train.GetComponent<trainShaking>().moonfuel >= 1){
+					train.GetComponent<trainShaking>().speedUp(0.010f);
+					train.GetComponent<trainShaking>().moonfuel -= 1;
 				}
 			}
 			break;
