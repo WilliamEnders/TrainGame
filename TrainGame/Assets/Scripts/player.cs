@@ -81,9 +81,7 @@ public class player : MonoBehaviour {
 	void Update () {
 
 		if(transform.position.y < -5){
-
 			transform.position = respawn.position;
-
 		}
 		if (Input.GetKeyDown (action)) {
 			doAction(); 
@@ -185,7 +183,9 @@ public class player : MonoBehaviour {
 		}
 	}
 	private void OnTriggerEnter(Collider collision) {
-		switch (collision.gameObject.name) {
+		string _collision = collision.gameObject.name;
+	
+		switch (_collision) {
 		case "coal":
 			control = "coal";
 			break;
@@ -211,30 +211,6 @@ public class player : MonoBehaviour {
 		case "wheel":
 			control = "wheel";
 			break;
-		case "teleport1":
-			if(!justteleported){
-				justteleported=true;
-				transform.position = new Vector3(GameObject.Find ("teleport2").transform.position.x - 0.6f,transform.position.y,transform.position.z);
-			}
-				break;
-		case "teleport2":
-			if(!justteleported){
-				justteleported=true;
-				transform.position = new Vector3(GameObject.Find ("teleport1").transform.position.x + 0.6f,transform.position.y,transform.position.z);
-			}
-			break;
-		case "teleport3":
-			if(!justteleported){
-				justteleported=true;
-				transform.position = new Vector3(GameObject.Find ("teleport4").transform.position.x - 0.6f,transform.position.y,transform.position.z);
-			}
-			break;
-		case "teleport4":
-			if(!justteleported){
-				justteleported=true;
-				transform.position = new Vector3(GameObject.Find ("teleport3").transform.position.x + 0.6f,transform.position.y,transform.position.z);
-			}
-			break;
 		case "frontbutton":
 			control = "frontbutton";
 			break;
@@ -242,12 +218,15 @@ public class player : MonoBehaviour {
 			control = "fusion";
 			break;
 		}
+
+		GameObject.Find ("action").GetComponent<SpriteRenderer> ().enabled = true;
+		GameObject.Find ("action").transform.position = collision.gameObject.transform.position;
+
 	}
 	private void OnTriggerExit(Collider collision) {
-		if (collision.gameObject.name == "teleport1" || collision.gameObject.name == "teleport2" || collision.gameObject.name == "teleport3" || collision.gameObject.name == "teleport4") {
-			justteleported = false;
-		}
-		if(control==collision.gameObject.name){
+		string _collision = collision.gameObject.name;
+		GameObject.Find (_collision + "_action").GetComponent<SpriteRenderer> ().enabled = false;
+		if(control==_collision){
 			control="";
 		}
 	}
