@@ -10,6 +10,7 @@ public class cameraMove : MonoBehaviour {
 	private Vector3 endPos;
 	private float zoom;
 	private float average;
+	private Vector3 moveTo;
 
 	// Use this for initialization
 	void Start () {
@@ -21,8 +22,9 @@ public class cameraMove : MonoBehaviour {
 	void Update () {
 
 		findAverage ();
+		moveTo = new Vector3 (average,1f,zoom);
 
-		transform.position = new Vector3(average,1f,zoom);
+		transform.position =  Vector3.MoveTowards(transform.position,moveTo,5 * Time.deltaTime);
 		
 	}
 

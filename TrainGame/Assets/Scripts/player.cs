@@ -52,7 +52,31 @@ public class player : MonoBehaviour {
 		respawn = GameObject.Find ("respawn").transform;
 		
 	}
-	
+
+	void FixedUpdate(){
+		if (Input.GetKey (up)) { 
+			if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
+				GetComponent<Rigidbody>().AddForce(Vector3.forward * speed);
+			}
+		} else if (Input.GetKey (down)) {
+			if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
+				GetComponent<Rigidbody>().AddForce(Vector3.back * speed);
+			}
+		}
+		if (Input.GetKey (right)) {
+			if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
+				GetComponent<Rigidbody>().AddForce(Vector3.right * speed);
+			}
+			transform.localScale = new Vector3 (-xScale, transform.localScale.y, transform.localScale.z);
+		} else if (Input.GetKey (left)) {
+			if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
+				GetComponent<Rigidbody>().AddForce(Vector3.left * speed);
+			}
+			transform.localScale = new Vector3 (xScale, transform.localScale.y, transform.localScale.z);
+		}
+
+	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -61,27 +85,6 @@ public class player : MonoBehaviour {
 			transform.position = respawn.position;
 
 		}
-			if (Input.GetKey (up)) { 
-				if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
-					GetComponent<Rigidbody>().AddForce(Vector3.forward * speed);
-				}
-			} else if (Input.GetKey (down)) {
-				if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
-					GetComponent<Rigidbody>().AddForce(Vector3.back * speed);
-				}
-			}
-			if (Input.GetKey (right)) {
-				if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
-					GetComponent<Rigidbody>().AddForce(Vector3.right * speed);
-				}
-				transform.localScale = new Vector3 (-xScale, transform.localScale.y, transform.localScale.z);
-			} else if (Input.GetKey (left)) {
-				if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
-					GetComponent<Rigidbody>().AddForce(Vector3.left * speed);
-				}
-				transform.localScale = new Vector3 (xScale, transform.localScale.y, transform.localScale.z);
-			}
-
 		if (Input.GetKeyDown (action)) {
 			doAction(); 
 		}
