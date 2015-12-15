@@ -220,12 +220,12 @@ public class player : MonoBehaviour {
 		}
 
 		GameObject.Find ("action").GetComponent<SpriteRenderer> ().enabled = true;
-		GameObject.Find ("action").transform.position = collision.gameObject.transform.position;
+		//GameObject.Find ("action").transform.position = collision.gameObject.transform.position;
 
 	}
 	private void OnTriggerExit(Collider collision) {
 		string _collision = collision.gameObject.name;
-		GameObject.Find (_collision + "_action").GetComponent<SpriteRenderer> ().enabled = false;
+		GameObject.Find ( "action").GetComponent<SpriteRenderer> ().enabled = false;
 		if(control==_collision){
 			control="";
 		}
