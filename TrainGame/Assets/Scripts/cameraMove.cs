@@ -23,8 +23,10 @@ public class cameraMove : MonoBehaviour {
 
 		findAverage ();
 		moveTo = new Vector3 (average,1f,zoom);
-
-		transform.position =  Vector3.MoveTowards(transform.position,moveTo,5 * Time.deltaTime);
+		trainShaking h = GameObject.Find ("hub").GetComponent<trainShaking> ();
+		if (h.op.x >= -0.9f && h.speed<=h.maxSpeed) {
+			transform.position = Vector3.MoveTowards (transform.position, moveTo, 5 * Time.deltaTime);
+		}
 		
 	}
 

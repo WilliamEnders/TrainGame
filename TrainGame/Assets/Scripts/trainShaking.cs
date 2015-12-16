@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class trainShaking : MonoBehaviour {
 
 	// Use this for initialization
-	private Vector3 op;
+	public Vector3 op;
 	private Vector3 op2;
 	public bool chop;
 	public int buttonCount;
@@ -15,6 +15,7 @@ public class trainShaking : MonoBehaviour {
 	public float broke;
 	private float bump;
 	public float speed;
+	public float maxSpeed;
 
 	public GameObject fire;
 	public GameObject magicfire;
@@ -111,17 +112,16 @@ public class trainShaking : MonoBehaviour {
 		} else {
 			bump = 1f;
 		}
-		if (op.x < -0.9f) {
+		print (speed);
+		if (op.x < -0.9f || speed>=maxSpeed) {
 			op.x += 0.05f;
-		}
-		if (op2.x < -9.47f) {
-			op2.x += 0.05f;
-		}else{
-			maintrack.transform.Translate(Vector3.left*speed);
-			GameObject.Find ("trees").transform.Translate(Vector3.left*speed);
+		} else {
 
-			if(maintrack.transform.position.x<=-18.49f){
-				maintrack.transform.Translate(Vector3.right*(33.49f));
+			maintrack.transform.Translate (Vector3.left * speed);
+			GameObject.Find ("trees").transform.Translate (Vector3.left * speed);
+
+			if (maintrack.transform.position.x <= -18.49f) {
+				maintrack.transform.Translate (Vector3.right * (33.49f));
 			}
 		}
 		int isStop = (speed > 0) ? 1 : 0;
