@@ -38,7 +38,7 @@ public class player : MonoBehaviour {
 	private GameObject train;
 	private Transform respawn;
 	private float maxSpeed = 5f;
-	private bool shoutted_log=false,shoutted_steam=false,shoutted_fire=false,shoutted_lightening=false,shoutted_asteroid=false;
+	private bool shoutted_log=false,shoutted_steam=false,shoutted_fire=false,shoutted_lightning=false,shoutted_asteroid=false;
 
 
 	// Use this for initialization
@@ -56,9 +56,11 @@ public class player : MonoBehaviour {
 		face = gameObject.transform.GetChild(0);
 	}
 	public void shout(string _t){
-		if (getShout (_t)) {
+		if (!getShout (_t)) {
 			setShout (_t, true);
 			GameObject.Find ("shout").GetComponent<Animator> ().Play (_t);
+			GameObject.Find ("shout").GetComponent<SpriteRenderer> ().enabled = true;
+			GameObject.Find ("Face4").GetComponent<Animator> ().Play ("facesad");
 		}
 	}
 	public void setShout(string _t,bool _b){
@@ -70,22 +72,27 @@ public class player : MonoBehaviour {
 			shoutted_fire  = _b;
 		} else if (_t == "asteroid") {
 			shoutted_asteroid = _b;
-		} else if (_t == "lightening") {
-			shoutted_lightening = _b;
+		} else if (_t == "lightning") {
+			shoutted_lightning = _b;
+		}
+		if (!shoutted_log && !shoutted_steam && !shoutted_fire && !shoutted_asteroid && !shoutted_lightning) {
+			GameObject.Find ("shout").GetComponent<SpriteRenderer> ().enabled = false;
+			GameObject.Find ("Face4").GetComponent<Animator> ().Play ("faceidle");
 		}
 	}
 	private bool getShout(string _t){
 		if (_t == "log") {
-			return shoutted_log
+			return shoutted_log;
 		} else if (_t == "steam") {
 			return shoutted_steam;
 		} else if (_t == "fire") {
 			return shoutted_fire;
 		} else if (_t == "asteroid") {
 			return	shoutted_asteroid ;
-		} else if (_t == "lightening") {
-			return shoutted_lightening;
+		} else if (_t == "lightning") {
+			return shoutted_lightning;
 		}
+		return false;
 	}
 	void FixedUpdate(){
 		if (Input.GetKey (up)) { 
