@@ -38,6 +38,8 @@ public class player : MonoBehaviour {
 	private GameObject train;
 	private Transform respawn;
 	private float maxSpeed = 5f;
+	private bool shoutted_log=false,shoutted_steam=false,shoutted_fire=false,shoutted_lightening=false,shoutted_asteroid=false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -53,7 +55,38 @@ public class player : MonoBehaviour {
 		button = gameObject.transform.GetChild(1);
 		face = gameObject.transform.GetChild(0);
 	}
-
+	public void shout(string _t){
+		if (getShout (_t)) {
+			setShout (_t, true);
+			GameObject.Find ("shout").GetComponent<Animator> ().Play (_t);
+		}
+	}
+	public void setShout(string _t,bool _b){
+		if (_t == "log") {
+			shoutted_log = _b;
+		} else if (_t == "steam") {
+			shoutted_steam = _b;
+		} else if (_t == "fire") {
+			shoutted_fire  = _b;
+		} else if (_t == "asteroid") {
+			shoutted_asteroid = _b;
+		} else if (_t == "lightening") {
+			shoutted_lightening = _b;
+		}
+	}
+	private bool getShout(string _t){
+		if (_t == "log") {
+			return shoutted_log
+		} else if (_t == "steam") {
+			return shoutted_steam;
+		} else if (_t == "fire") {
+			return shoutted_fire;
+		} else if (_t == "asteroid") {
+			return	shoutted_asteroid ;
+		} else if (_t == "lightening") {
+			return shoutted_lightening;
+		}
+	}
 	void FixedUpdate(){
 		if (Input.GetKey (up)) { 
 			if(GetComponent<Rigidbody>().velocity.magnitude<maxSpeed){
