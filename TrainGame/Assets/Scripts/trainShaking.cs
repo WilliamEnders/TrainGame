@@ -22,7 +22,6 @@ public class trainShaking : MonoBehaviour {
 	private GameObject overheatFire;
 	private GameObject maintrack;
 	public GameObject p1,p2,p3,p4;
-	private GameObject mph;
 
 	void Start () {
 		overheat = 0;
@@ -39,8 +38,6 @@ public class trainShaking : MonoBehaviour {
 		overheatFire = GameObject.Find ("overheatFire");
 		steam = GameObject.Find ("steam");
 		op = GameObject.Find ("train").transform.position;
-		mph = GameObject.Find ("mph");
-
 		p1 = GameObject.Find ("p1");
 		p2 = GameObject.Find ("p2");
 		p3 = GameObject.Find ("p3");
@@ -116,7 +113,6 @@ public class trainShaking : MonoBehaviour {
 	public void speedUp(float incSpeed){
 		if(speed < 10f){
 		speed += incSpeed;
-			GameObject.Find ("Face").GetComponent<Animator>().Play ("facehappy");
 		}
 	}
 	public void speedDown(float _n = -1f){
@@ -130,17 +126,6 @@ public class trainShaking : MonoBehaviour {
 		}
 		
 	}
-	/*
-	public IEnumerator drippingObj(){
-
-		yield return new WaitForSeconds(5);
-		GameObject.Find ("dripping").GetComponent<ParticleSystem> ().Play ();
-		print ("s");
-		Vector3 _v = new Vector3(GameObject.Find ("TrainCar2").transform.position.x+Random.Range (-2, 2),GameObject.Find ("dripping").transform.position.y,GameObject.Find ("dripping").transform.position.z);
-		GameObject.Find ("dripping").transform.position = _v;
-		StartCoroutine("drippingObj");
-	}
-	*/
 
 	public IEnumerator chopObj(){
 		chop = true;

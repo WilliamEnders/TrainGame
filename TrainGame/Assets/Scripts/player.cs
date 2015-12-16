@@ -26,6 +26,8 @@ public class player : MonoBehaviour {
 	private GameObject buckets;
 	private GameObject moon;
 	public GameObject moonstone;
+	private Transform button;
+	private Transform face;
 	private bool coalCarry;
 	private bool bucketCarry;
 
@@ -36,12 +38,10 @@ public class player : MonoBehaviour {
 	private GameObject train;
 	private Transform respawn;
 	private float maxSpeed = 5f;
-	private bool justteleported;
-	private int drippingCount = 0;
+
 	// Use this for initialization
 	void Start () {
 		moonCarry = false;
-		justteleported = false;
 		bucketValue = 0;
 		jumpspeed = 600f;
 		ground = -1.20f;
@@ -50,7 +50,8 @@ public class player : MonoBehaviour {
 		coalCarry = bucketCarry = false;
 		xScale = transform.localScale.x;
 		respawn = GameObject.Find ("respawn").transform;
-		
+		button = gameObject.transform.GetChild(1);
+		face = gameObject.transform.GetChild(0);
 	}
 
 	void FixedUpdate(){
@@ -171,11 +172,13 @@ public class player : MonoBehaviour {
 		switch (collision.gameObject.name) {
 		case "dripping":
 			if (bucketCarry) {
-				if(bucketValue<=100){
+				if (bucketValue <= 100) {
 					bucketValue++;
 					buckets.transform.localScale = buckets.transform.localScale * 1.01f;
-					originalSpeed=speed;
+					originalSpeed = speed;
 					speed *= 0.9998f;
+				} else {
+					buckets.GetComponent<Animator> ().Play ("full");
 				}
 			}
 			control = "waterpipe";
@@ -201,6 +204,7 @@ public class player : MonoBehaviour {
 				if(train.GetComponent<trainShaking>().fuel >= 1){
 					train.GetComponent<trainShaking>().speedUp(0.005f);
 					train.GetComponent<trainShaking>().fuel -= 1;
+					face.GetComponent<Animator>().Play ("facehappy");
 				}
 				if(train.GetComponent<trainShaking>().moonfuel >= 1){
 					train.GetComponent<trainShaking>().speedUp(0.010f);
@@ -218,14 +222,19 @@ public class player : MonoBehaviour {
 			control = "fusion";
 			break;
 		}
-
-		GameObject.Find ("action").GetComponent<SpriteRenderer> ().enabled = true;
-		//GameObject.Find ("action").transform.position = collision.gameObject.transform.position;
+		if(_collision != "dripping"){
+		button.GetComponent<SpriteRenderer> ().enabled = true;
+		}
+		if (_collision == "bellow") {
+			button.GetComponent<Animator> ().Play ("buttonAnimB");
+		} else {
+			button.GetComponent<Animator> ().Play ("buttonAnimA");
+		}
 
 	}
 	private void OnTriggerExit(Collider collision) {
 		string _collision = collision.gameObject.name;
-		GameObject.Find ( "action").GetComponent<SpriteRenderer> ().enabled = false;
+		button.GetComponent<SpriteRenderer> ().enabled = false;
 		if(control==_collision){
 			control="";
 		}
