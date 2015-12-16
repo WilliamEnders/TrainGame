@@ -22,6 +22,10 @@ public class trainShaking : MonoBehaviour {
 	private GameObject overheatFire;
 	private GameObject maintrack;
 	public GameObject p1,p2,p3,p4;
+	private GameObject trainSound;
+	private GameObject fireSound;
+	private GameObject steamSound;
+
 
 	void Start () {
 		overheat = 0;
@@ -42,6 +46,9 @@ public class trainShaking : MonoBehaviour {
 		p2 = GameObject.Find ("p2");
 		p3 = GameObject.Find ("p3");
 		p4 = GameObject.Find ("p4");
+		trainSound= GameObject.Find ("TrainSound");
+		fireSound= GameObject.Find ("a_fire");
+		steamSound= GameObject.Find ("a_steam");
 	}
 
 	// Update is called once per frame
@@ -77,7 +84,8 @@ public class trainShaking : MonoBehaviour {
 		} else {
 			p2.GetComponent<player> ().shout ("fire");
 		}
-
+		fireSound.GetComponent<AudioSource> ().volume = overheat / 100;
+			
 		overheatFire.GetComponent<ParticleSystem> ().emissionRate = overheat ;
 
 		fire.GetComponent<ParticleSystem> ().emissionRate = fuel * 4;
@@ -85,6 +93,8 @@ public class trainShaking : MonoBehaviour {
 		speedDown (broke / 10000f);
 
 		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke*100;
+		steamSound.GetComponent<AudioSource> ().volume = broke ;
+
 		if (broke > 0) {
 			p2.GetComponent<player> ().shout ("steam");
 		} else {
@@ -94,6 +104,7 @@ public class trainShaking : MonoBehaviour {
 		steam.GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		steam.GetComponent<ParticleSystem> ().emissionRate = speed > 0f ? 10f  : 0f;
 
+		trainSound.GetComponent<AudioSource> ().pitch = speed*10;
 
 		if (bump > 1f) {
 			bump -= 0.4f;
