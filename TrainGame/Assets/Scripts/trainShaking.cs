@@ -70,9 +70,12 @@ public class trainShaking : MonoBehaviour {
 
 		}
 		if (overheat <= 0) {
-			if (Random.Range (0,1000)  == 1) {
+			if (Random.Range (0, 1000) == 1) {
 				overheat = 100;
 			}
+			p4.GetComponent<player> ().setShout ("fire",false);
+		} else {
+			p4.GetComponent<player> ().shout ("fire");
 		}
 
 		overheatFire.GetComponent<ParticleSystem> ().emissionRate = overheat ;
@@ -82,6 +85,11 @@ public class trainShaking : MonoBehaviour {
 		speedDown (broke / 10000f);
 
 		GameObject.Find ("brokepipe").GetComponent<ParticleSystem> ().emissionRate = broke*100;
+		if (broke > 0) {
+			p4.GetComponent<player> ().shout ("steam");
+		} else {
+			p4.GetComponent<player> ().setShout ("steam", false);
+		}
 
 		steam.GetComponent<ParticleSystem> ().startSpeed = speed * 10f;
 		steam.GetComponent<ParticleSystem> ().emissionRate = speed > 0f ? 10f  : 0f;
@@ -103,7 +111,6 @@ public class trainShaking : MonoBehaviour {
 
 			if(maintrack.transform.position.x<=-18.49f){
 				maintrack.transform.Translate(Vector3.right*(33.49f));
-
 			}
 		}
 		int isStop = (speed > 0) ? 1 : 0;
