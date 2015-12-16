@@ -40,6 +40,7 @@ public class player : MonoBehaviour {
 	private float maxSpeed = 5f;
 	private bool shoutted_log=false,shoutted_steam=false,shoutted_fire=false,shoutted_lightning=false,shoutted_asteroid=false;
 
+	private GameObject bellowSound,putoutSound,coalSound,stoveSound,moonSound,moonStoveSound,waterSound;
 
 	// Use this for initialization
 	void Start () {
@@ -54,6 +55,13 @@ public class player : MonoBehaviour {
 		respawn = GameObject.Find ("respawn").transform;
 		button = gameObject.transform.GetChild(1);
 		face = gameObject.transform.GetChild(0);
+		bellowSound=GameObject.Find ("a_bellow");
+		putoutSound=GameObject.Find ("a_putout");
+		coalSound=GameObject.Find ("a_coal");
+		stoveSound=GameObject.Find ("a_stove");
+		moonSound=GameObject.Find ("a_moonrock");
+		moonStoveSound=GameObject.Find ("a_moonstove");
+		waterSound=GameObject.Find ("a_water");
 	}
 	public void shout(string _t){
 		if (!getShout (_t)) {
@@ -146,6 +154,7 @@ public class player : MonoBehaviour {
 				coals = Instantiate (coal, new Vector3 (transform.position.x, transform.position.y - 0.2f, transform.position.z - 0.2f), transform.rotation) as GameObject;
 				coals.transform.parent = transform;
 				speed -= slowdown;
+				coalSound.GetComponent<AudioSource> ().Play ();
 				coalCarry = true;
 			}else{
 				if(bucketCarry){
@@ -153,6 +162,7 @@ public class player : MonoBehaviour {
 					bucketCarry=false;
 					Destroy (buckets);
 					speed=originalSpeed;
+					putoutSound.GetComponent<AudioSource> ().Play ();
 					train.GetComponent<trainShaking>().overheat -= bucketValue;
 					if(train.GetComponent<trainShaking>().overheat<0){
 						train.GetComponent<trainShaking>().overheat=0;
@@ -167,6 +177,7 @@ public class player : MonoBehaviour {
 				buckets = Instantiate (bucket, new Vector3 (transform.position.x, transform.position.y - 0.2f, transform.position.z - 0.2f), transform.rotation) as GameObject;
 				buckets.transform.parent = transform;
 				buckets.transform.localScale *= 0.1f;
+				coalSound.GetComponent<AudioSource> ().Play ();
 				//speed -= slowdown;
 				bucketCarry = true;
 			}
@@ -178,23 +189,31 @@ public class player : MonoBehaviour {
 				coalCarry = false;
 				Destroy (coals);
 				train.GetComponent<trainShaking> ().fuel = 5;
+				stoveSound.GetComponent<AudioSource> ().Play ();
 			}
 			if (moonCarry) {
+				
 				speed += slowdown;
 				moonCarry = false;
 				Destroy (moon);
 				train.GetComponent<trainShaking> ().moonfuel = 10;
+				moonStoveSound.GetComponent<AudioSource> ().Play ();
 			}
 			break;
 		case "wheel":
-			train.GetComponent<trainShaking>().broke -=0.1f;
-			if(train.GetComponent<trainShaking>().broke<0f)train.GetComponent<trainShaking>().broke=0f;
-			GameObject.Find ("a_wheel").GetComponent<AudioSource> ().Play ();
+			train.GetComponent<trainShaking> ().broke -= 0.1f;
+			if (train.GetComponent<trainShaking> ().broke < 0f) {
+				train.GetComponent<trainShaking> ().broke = 0f;
+			}
+			if (GameObject.Find ("a_wheel").GetComponent<AudioSource> ().time == 0) {
+				GameObject.Find ("a_wheel").GetComponent<AudioSource> ().Play ();
+			}
 			GameObject.Find("wheel").transform.Rotate(new Vector3(0,0,10));
 			break;
 		case "frontbutton":
 			if(train.GetComponent<trainShaking>().chop == false){
-			train.GetComponent<trainShaking>().StartCoroutine("chopObj");
+				train.GetComponent<trainShaking>().StartCoroutine("chopObj");
+				stoveSound.GetComponent<AudioSource> ().Play ();
 			}
 			break;
 		case "fusion":
@@ -203,6 +222,7 @@ public class player : MonoBehaviour {
 				moon.transform.parent = transform;
 				coalCarry = false;
 				moonCarry = true;
+				moonSound.GetComponent<AudioSource> ().Play ();
 				Destroy (coals);
 			}
 			break;
@@ -213,6 +233,9 @@ public class player : MonoBehaviour {
 		case "dripping":
 			if (bucketCarry) {
 				if (bucketValue <= 100) {
+					if(waterSound.GetComponent<AudioSource>().time==0){
+						waterSound.GetComponent<AudioSource>().Play();
+					}
 					bucketValue++;
 					buckets.transform.localScale = buckets.transform.localScale * 1.01f;
 					originalSpeed = speed;
@@ -240,6 +263,7 @@ public class player : MonoBehaviour {
 			break;
 		case "bellow":
 			if(GetComponent<Rigidbody>().velocity.y < 0){
+				bellowSound.GetComponent<AudioSource> ().Play ();
 				GameObject.Find("bellow").GetComponent<Animator>().Play("Bellow");
 				if(train.GetComponent<trainShaking>().fuel >= 1){
 					train.GetComponent<trainShaking>().speedUp(0.005f);
