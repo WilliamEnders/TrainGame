@@ -27,6 +27,7 @@ public class trainShaking : MonoBehaviour {
 	private GameObject fireSound;
 	private GameObject steamSound;
 	public int level=0;
+	public int levelNum;
 
 	void Start () {
 		overheat = 0;
@@ -125,6 +126,14 @@ public class trainShaking : MonoBehaviour {
 		}
 		int isStop = (speed > 0) ? 1 : 0;
 		GameObject.Find ("train").transform.position = op + Random.Range(0f,0.05f) * Vector3.up*bump*isStop;
+		if(op.x > 30){
+			if(levelNum == 1){
+				Application.LoadLevel ("LoadingLevel2");
+			}
+			if(levelNum == 2){
+				Application.LoadLevel ("LoadingLevel3");
+			}
+		}
 	}
 
 	public void speedUp(float incSpeed){
