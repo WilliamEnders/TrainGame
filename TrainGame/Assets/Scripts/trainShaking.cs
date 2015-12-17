@@ -26,7 +26,7 @@ public class trainShaking : MonoBehaviour {
 	private GameObject trainSound;
 	private GameObject fireSound;
 	private GameObject steamSound;
-
+	public int level=0;
 
 	void Start () {
 		overheat = 0;
@@ -78,13 +78,13 @@ public class trainShaking : MonoBehaviour {
 
 		}
 		if (overheat <= 0) {
-			if (Random.Range (0, 1000) == 1) {
-				overheat = 100;
-			}
 			p2.GetComponent<player> ().setShout ("fire",false);
-		} else {
-			p2.GetComponent<player> ().shout ("fire");
-		}
+
+			if (Random.Range (0, 2000-(int)Mathf.Round(speed*6000)) == 1 && level!=1) {
+				overheat = 100;
+				p2.GetComponent<player> ().shout ("fire");
+			}
+		} 
 		fireSound.GetComponent<AudioSource> ().volume = overheat / 100;
 			
 		overheatFire.GetComponent<ParticleSystem> ().emissionRate = overheat ;

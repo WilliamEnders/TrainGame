@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class tree : MonoBehaviour {
-
+	public int distance=40;
 	// Use this for initialization
 	void Start () {
 	
@@ -10,8 +10,8 @@ public class tree : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (transform.position.x < -40f) {
-			transform.Translate(Vector3.right*100f);
+		if (transform.position.x < -distance) {
+			transform.Translate(Vector3.right*2*distance);
 		}
 	}
 }
