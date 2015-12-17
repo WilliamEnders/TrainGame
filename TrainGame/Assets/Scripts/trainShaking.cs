@@ -112,7 +112,6 @@ public class trainShaking : MonoBehaviour {
 		} else {
 			bump = 1f;
 		}
-		print (speed);
 		if (op.x < -0.9f || speed>=maxSpeed) {
 			op.x += 0.05f;
 		} else {

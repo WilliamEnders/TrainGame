@@ -7,11 +7,14 @@ public class loadLevel : MonoBehaviour {
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Application.GetStreamProgressForLevel("level1") == 1){
-			Application.LoadLevel("level1");
-		}
+
+	public void load1(){
+		Application.LoadLevel("Level1");
+	}
+	public void load2(){
+		Application.LoadLevel("Level2");
+	}
+	public void load3(){
+		Application.LoadLevel("Level3");
 	}
 }
